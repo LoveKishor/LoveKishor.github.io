@@ -26,6 +26,62 @@
             position: relative;
         }
 
+        /* Navigation Bar */
+        .navbar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #005f86;
+            border-radius: 5px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            position: relative;
+        }
+
+        .navbar ul li {
+            position: relative;
+            display: inline-block;
+        }
+
+        .navbar ul li a {
+            display: block;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .navbar ul li:hover > a {
+            background-color: #0096c7;
+        }
+
+        /* Dropdown Menu */
+        .navbar ul li ul {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 100%;
+            background-color: #005f86;
+            border-radius: 5px;
+            padding: 0;
+            list-style-type: none;
+            z-index: 100;
+        }
+
+        .navbar ul li:hover ul {
+            display: block;
+        }
+
+        .navbar ul li ul li a {
+            padding: 10px 15px;
+            text-align: left;
+            font-weight: normal;
+        }
+
         header img {
             width: 150px; /* Adjust the size as needed */
             height: 150px;
@@ -103,6 +159,20 @@
 <body>
 
     <header>
+        <div class="navbar">
+            <ul>
+                <li>
+                    <a href="#">Menu</a>
+                    <ul>
+                        <li><a href="https://www.facebook.com/" target="_blank">My Facebook</a></li>
+                        <li><a href="https://www.linkedin.com/in/love-bista-427a42a7" target="_blank">My LinkedIn</a></li>
+                        <li><a href="https://sites.google.com/" target="_blank">My Google Site</a></li>
+                        <li><a href="https://www.youtube.com/" target="_blank">My YouTube</a></li>
+                        <li><a href="https://drive.google.com/file/d/your-cv-id/view" target="_blank">My CV</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
         <img src="IMG_5225.jpg" alt="Love Kishor Bista">
         <div class="container">
             <h1>Love Kishor Bista</h1>
