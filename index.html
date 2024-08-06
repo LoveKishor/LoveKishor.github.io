@@ -13,6 +13,9 @@
             background-color: #e0f7fa;
             color: #333;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         header {
@@ -34,10 +37,11 @@
         }
 
         .container {
+            flex: 1; /* Allows container to take available space */
             max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
-            padding-bottom: 80px; /* Adds space for the footer */
+            padding-bottom: 60px; /* Space for the minimized footer */
         }
 
         h1 {
@@ -89,9 +93,9 @@
             background-color: #0077b6;
             color: white;
             text-align: center;
-            padding: 10px 0;
+            padding: 5px 0; /* Reduced padding */
             width: 100%;
-            position: static; /* Changed from fixed to static */
+            font-size: 0.9em; /* Slightly smaller text */
         }
     </style>
 </head>
