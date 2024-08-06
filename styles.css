@@ -1,0 +1,95 @@
+/* Basic reset */
+body, ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: #333;
+    padding: 10px 20px;
+}
+
+/* Menu styling */
+.menu {
+    display: flex;
+    justify-content: center; /* Center align menu items */
+    align-items: center;
+}
+
+.menu li {
+    margin: 0 15px; /* Space between menu items */
+}
+
+.menu a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 15px;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Hover effect */
+.menu a:hover {
+    background-color: #555;
+    color: #fff;
+    border-radius: 5px; /* Rounded corners on hover */
+}
+
+/* Active link styling (optional) */
+.menu a.active {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+}
+
+/* Responsive Styles */
+
+/* For tablets and mobile devices in landscape mode */
+@media (max-width: 768px) {
+    .menu {
+        flex-direction: column; /* Stack menu items vertically */
+        align-items: flex-start; /* Align items to the start */
+        background-color: #333; /* Ensure background color is consistent */
+        position: absolute; /* Position the menu absolutely */
+        top: 50px; /* Adjust based on navbar height */
+        left: 0;
+        width: 100%; /* Full width */
+        display: none; /* Hide menu by default */
+        z-index: 1000; /* Ensure it is above other content */
+    }
+
+    .menu li {
+        margin: 0; /* Remove horizontal margin */
+    }
+
+    .menu a {
+        padding: 15px 20px; /* Add padding for touch screens */
+        font-size: 18px; /* Increase font size */
+        text-align: center; /* Center align text */
+    }
+
+    .menu.show {
+        display: flex; /* Show menu when toggled */
+    }
+
+    .navbar .menu-toggle {
+        display: block; /* Show the menu toggle button */
+        background-color: #333;
+        border: none;
+        color: white;
+        font-size: 24px;
+        padding: 10px;
+        cursor: pointer;
+    }
+}
+
+/* For mobile devices in portrait mode */
+@media (max-width: 480px) {
+    .menu a {
+        font-size: 16px; /* Adjust font size for smaller screens */
+    }
+}
