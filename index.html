@@ -32,6 +32,42 @@
             left: calc(50% - 75px); /* Centers the image */
         }
 
+        nav {
+            background-color: #0077b6;
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 10px;
+            border-radius: 0 0 0 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        nav ul li {
+            margin: 5px 0;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.2em;
+            padding: 10px;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: #005f73;
+            border-radius: 5px;
+        }
+
         .container {
             max-width: 1000px;
             margin: 0 auto;
@@ -70,19 +106,6 @@
             text-align: center;
         }
 
-        .contact-info {
-            background-color: #0077b6;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            border-radius: 5px;
-        }
-
-        .contact-info a {
-            color: white;
-            text-decoration: none;
-        }
-
         .footer {
             background-color: #0077b6;
             color: white;
@@ -105,8 +128,15 @@
         </div>
     </header>
 
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
     <div class="container">
-        <section id="about-me">
+        <section id="home">
             <h2>About Me</h2>
             <p>
                 I am a passionate Renewable Energy Engineer with a Master’s degree in Renewable Energy Engineering.
@@ -134,15 +164,6 @@
                 <li>Nav Dynamics</li>
                 <li>Python</li>
             </ul>
-        </section>
-
-        <section id="contact">
-            <h2>Contact Information</h2>
-            <div class="contact-info">
-                <p>Email: <a href="mailto:lovekishorbista@gmail.com">lovekishorbista@gmail.com</a></p>
-                <p>Phone: <a href="tel:+447437451560">+44 7437 451560</a></p>
-                <p>LinkedIn: <a href="https://www.linkedin.com" target="_blank">linkedin.com/in/love-kishor-bista</a></p>
-            </div>
         </section>
     </div>
 
