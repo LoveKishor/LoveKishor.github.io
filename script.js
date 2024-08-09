@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add event listener to the button
     hiBtn.addEventListener('click', function() {
         // Hide popup
-        popup.classList.add('hidden');
+    popup.classList.add('hidden');
         // Show main content
         mainContent.classList.remove('hidden');
     });

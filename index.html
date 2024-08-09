@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Love Kishor Bista - Renewable Energy Engineer</title>
-<!-- Link to the CSS file -->
+    <!-- Link to the CSS file -->
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
@@ -94,7 +93,7 @@
             left: calc(50% - 75px); /* Centers the image */
         }
 
-        .container {
+        .main-container {
             flex: 1; /* Allows container to take available space */
             max-width: 1000px;
             margin: 0 auto;
@@ -155,9 +154,31 @@
             width: 100%;
             font-size: 0.9em; /* Slightly smaller text */
         }
+
+        /* Popup styles */
+        .popup {
+            display: flex; /* Ensure the popup is visible */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-content {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
-
 <body>
 
     <header>
@@ -169,12 +190,12 @@
                         <li><a href="https://www.facebook.com/lovekishor" target="_blank">My Facebook</a></li>
                         <li><a href="https://www.linkedin.com/in/love-bista-427a42a7" target="_blank">My LinkedIn</a></li>
                         <li><a href="https://www.youtube.com/@lovekishorbista6687" target="_blank">My YouTube</a></li>
-			<li><a href="https://www.instagram.com/make_it_easy_with_love" target="_blank">My Insta</a></li>
+                        <li><a href="https://www.instagram.com/make_it_easy_with_love" target="_blank">My Insta</a></li>
                         <li><a href="https://drive.google.com/file/d/your-cv-id/view" target="_blank">My CV</a></li>
-			<li><a href="https://sites.google.com/view/participationforms/home" target="_blank">Participation forms</a></li>
-			<li><a href="https://sites.google.com/view/lovebista-projects/home" target="_blank">My Projects</a></li>
-			<li><a href="https://sites.google.com/view/lovebista-projects/home" target="_blank">My Research</a></li>
-			<li><a href="https://sites.google.com/view/social-works-love/home" target="_blank">Social Works</a></li>
+                        <li><a href="https://sites.google.com/view/participationforms/home" target="_blank">Participation forms</a></li>
+                        <li><a href="https://sites.google.com/view/lovebista-projects/home" target="_blank">My Projects</a></li>
+                        <li><a href="https://sites.google.com/view/lovebista-projects/home" target="_blank">My Research</a></li>
+                        <li><a href="https://sites.google.com/view/social-works-love/home" target="_blank">Social Works</a></li>
                     </ul>
                 </li>
             </ul>
@@ -186,7 +207,7 @@
         </div>
     </header>
 
-    <div class="container">
+    <div class="main-container">
         <section id="about-me">
             <h2>About Me</h2>
             <p>
@@ -230,18 +251,17 @@
         <p>&copy; 2024 Love Kishor Bista. All Rights Reserved.</p>
     </footer>
 
-<!-- Popup Dialog -->
-    <div id="popup" class="popup">
+    <!-- Popup Dialog -->
+    <div id="popup" class="popup hidden">
         <div class="popup-content">
             <h2>Hello there!</h2>
             <p>I greet you on behalf of Mr. Love Bista.</p>
             <button id="hi-btn">Hi</button>
         </div>
     </div>
-<!-- JavaScript -->
+
+    <!-- JavaScript -->
     <script src="script.js"></script>
 
-
 </body>
-
 </html>
