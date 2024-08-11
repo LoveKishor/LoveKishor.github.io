@@ -32,12 +32,19 @@
         .content h2 {
             margin-bottom: 20px;
         }
-        iframe {
-            width: 100%;
-            height: 500px;
-            border: none;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        .icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .icon a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .icon img {
+            width: 50px;
+            height: 50px;
         }
     </style>
 </head>
@@ -49,7 +56,11 @@
         <div class="content">
             <h2>Welcome to the Protected Page</h2>
             <p>This page is only accessible to authorized users.</p>
-            <iframe src="https://www.facebook.com/lovekishor" title="My Facebook"></iframe>
+            <div class="icon">
+                <a href="https://www.facebook.com/lovekishor" target="_blank" title="My Facebook">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Icon">
+                </a>
+            </div>
         </div>
     </div>
 </body>
