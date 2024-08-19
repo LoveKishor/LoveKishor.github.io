@@ -53,7 +53,7 @@
     <script>
         function authenticate() {
             const inputPassword = document.getElementById('password').value;
-            const correctPassword = 'yourpassword'; // Replace with your actual password
+            const correctPassword = 'love@123'; // Replace with your actual password
 
             if (inputPassword === correctPassword) {
                 window.location.href = 'protected.html'; // Redirect to the protected page
@@ -61,6 +61,14 @@
                 alert('Incorrect password. Please try again.');
             }
         }
+
+        // Add event listener to trigger authentication on Enter key press
+        document.getElementById('password').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent default form submission behavior
+                authenticate(); // Call the authenticate function
+            }
+        });
     </script>
 </body>
 </html>
