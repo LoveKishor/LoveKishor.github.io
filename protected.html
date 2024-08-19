@@ -13,6 +13,7 @@
             align-items: center;
             height: 100vh;
             background-color: #f4f4f4;
+            margin: 0; /* Ensure no extra margins */
         }
         .container {
             background: #fff;
@@ -21,6 +22,12 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 80%;
             max-width: 800px;
+        }
+        .login-container {
+            display: block; /* Ensure login container is displayed initially */
+        }
+        .content-container {
+            display: none; /* Hide content container initially */
         }
         header {
             margin-bottom: 20px;
@@ -53,14 +60,22 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>This page is for Admin Use</h1>
-        </header>
-        <div class="content">
-            <h2>Important Login Links</h2>
-            <p>This page is only accessible to authorized users.</p>
-            <div class="icons">
-                <a href="https://www.facebook.com/lovekishor" target="_blank" title="My Facebook">
+        <div class="login-container">
+            <h2>Enter Password to Access Protected Content</h2>
+            <input type="password" id="password" placeholder="Password" required>
+            <button onclick="authenticate()">Login</button>
+        </div>
+
+        <div class="content-container">
+            <header>
+                <h1>This page is for Admin Use</h1>
+            </header>
+            <div class="content">
+                <h2>Important Login Links</h2>
+                <p>This page is only accessible to authorized users.</p>
+                <div class="icons">
+                    <!-- Add your icons here -->
+                    <a href="https://www.facebook.com/lovekishor" target="_blank" title="My Facebook">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Icon">
                 </a>
                 <a href="https://github.com/" target="_blank" title="My GitHub">
@@ -99,8 +114,35 @@
 		  <a href="https://uk.mathworks.com/mwaccount/?s_tid=gn_myac" target="_blank" title="Mathworks">
                     <img src="Mathworks.PNG" alt="Mathworks Icon">
                 </a>
+                    <!-- Repeat for other icons -->
+                </div>
             </div>
         </div>
     </div>
+    <script>
+        function authenticate() {
+            const inputPassword = document.getElementById('password').value;
+            const correctPassword = 'yourpassword'; // Replace with your actual password
+
+            if (inputPassword === correctPassword) {
+                document.querySelector('.login-container').style.display = 'none';
+                document.querySelector('.content-container').style.display = 'block';
+            } else {
+                alert('Incorrect password. Please try again.');
+            }
+        }
+	// Add event listener to trigger authentication on Enter key press
+        document.getElementById('password').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent default form submission behavior
+                authenticate(); // Call the authenticate function
+            }
+        });
+	// Focus on the password input field when the page loads
+        window.onload = function() {
+            document.getElementById('password').focus();
+        };
+	
+    </script>
 </body>
 </html>
