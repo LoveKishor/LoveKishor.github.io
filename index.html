@@ -156,6 +156,28 @@
             font-size: 0.9em; /* Slightly smaller text */
         }
 
+        /* Top Right Navigation */
+        .top-right-nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #005f86;
+            border-radius: 5px;
+            display: flex;
+        }
+
+        .top-right-nav a {
+            display: block;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .top-right-nav a:hover {
+            background-color: #0096c7;
+        }
+
         /* Popup styles */
         .popup {
             display: flex; /* Ensure the popup is visible */
@@ -195,8 +217,6 @@
                         <li><a href="projects.html" target="_blank">My Projects</a></li>
                         <li><a href="research.html" target="_blank">My Research</a></li>
                         <li><a href="https://sites.google.com/view/social-works-love/home" target="_blank">Social Works</a></li>
-			<li><a href="protected.html" target="_blank">My login Dashboard</a></li>
-			<li><a href="https://lovebista.pythonanywhere.com" target="_blank">Personal Data</a></li>
                     </ul>
                 </li>
             </ul>
@@ -205,6 +225,11 @@
         <div class="container">
             <h1>Love Kishor Bista</h1>
             <p>Renewable Energy Engineer</p>
+        </div>
+        <div class="top-right-nav">
+            <a href="protected.html" target="_blank">Login Dashboard</a>
+            <a href="my_blogs.html" target="_blank">My Blogs</a>
+            <a href="https://lovebista.pythonanywhere.com/" target="_blank">Ask/Tell</a>
         </div>
     </header>
 
