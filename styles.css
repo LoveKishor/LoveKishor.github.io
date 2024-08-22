@@ -118,8 +118,15 @@ body, ul {
         flex-direction: column; /* Stack items vertically on small screens */
         display: flex; /* Ensure the menu is visible */
         width: auto; /* Ensure the width adjusts with content */
-        top: 20px; /* Maintain top alignment */
-        right: 20px; /* Maintain right alignment */
+        top: 10px; /* Adjust top alignment for smaller screens */
+        right: 10px; /* Adjust right alignment for smaller screens */
+        padding: 5px; /* Add some padding around the menu */
+    }
+
+    /* Smaller font size and padding for smaller screens */
+    .top-right-nav a {
+        font-size: 14px; /* Smaller font size */
+        padding: 5px 10px; /* Reduced padding */
     }
 }
 
@@ -130,11 +137,13 @@ body, ul {
     }
 
     .top-right-nav a {
-        font-size: 16px; /* Adjust font size for smaller screens */
+        font-size: 12px; /* Smaller font size for very small screens */
+        padding: 5px 8px; /* Further reduced padding */
     }
 
     .top-right-nav {
-        flex-direction: column; /* Ensure vertical alignment on very small screens */
+        top: 5px; /* Further adjust top alignment for very small screens */
+        right: 5px; /* Further adjust right alignment for very small screens */
     }
 }
 
