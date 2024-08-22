@@ -14,4 +14,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show main content
         mainContent.classList.remove('hidden');
     });
+    // Toggle the visibility of top-right navigation links on small screens
+    document.querySelector('.top-right-nav').addEventListener('click', function() {
+        this.classList.toggle('active');
+    });
+
 });

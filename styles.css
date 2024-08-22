@@ -123,3 +123,33 @@ button {
     cursor: pointer;
 }
 
+@media (max-width: 600px) {
+    .top-right-nav {
+        position: relative;
+        right: 0;
+        top: 0;
+        display: block;
+    }
+
+    .top-right-nav a {
+        display: none;
+    }
+
+    .top-right-nav::after {
+        content: 'Menu';
+        display: block;
+        background-color: #005f86;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .top-right-nav.active a {
+        display: block;
+        background-color: #0096c7;
+        margin: 5px 0;
+        text-align: center;
+    }
+}
