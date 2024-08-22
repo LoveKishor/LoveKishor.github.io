@@ -132,6 +132,10 @@ body, ul {
     .top-right-nav a {
         font-size: 16px; /* Adjust font size for smaller screens */
     }
+
+    .top-right-nav {
+        flex-direction: column; /* Ensure vertical alignment on very small screens */
+    }
 }
 
 /* Popup styling */
