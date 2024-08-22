@@ -77,6 +77,11 @@ body, ul {
 
 /* For tablets and mobile devices in landscape mode */
 @media (max-width: 768px) {
+    .navbar {
+        padding: 7.5px 15px; /* Reduce padding by 25% */
+        font-size: 12px; /* Reduce font size by 25% */
+    }
+
     .menu {
         flex-direction: column; /* Stack menu items vertically */
         align-items: flex-start; /* Align items to the start */
@@ -94,9 +99,8 @@ body, ul {
     }
 
     .menu a {
-        padding: 15px 20px; /* Add padding for touch screens */
-        font-size: 18px; /* Increase font size */
-        text-align: center; /* Center align text */
+        padding: 11.25px 15px; /* Increase padding for touch screens */
+        font-size: 13.5px; /* Reduce font size by 25% */
     }
 
     .menu.show {
@@ -108,42 +112,48 @@ body, ul {
         background-color: #333;
         border: none;
         color: white;
-        font-size: 24px;
-        padding: 10px;
+        font-size: 18px; /* Reduce font size by 25% */
+        padding: 7.5px; /* Reduce padding by 25% */
         cursor: pointer;
     }
 
-    /* Adjust the top-right-nav menu for small screens */
     .top-right-nav {
         flex-direction: column; /* Stack items vertically on small screens */
         display: flex; /* Ensure the menu is visible */
         width: auto; /* Ensure the width adjusts with content */
-        top: 10px; /* Adjust top alignment for smaller screens */
-        right: 10px; /* Adjust right alignment for smaller screens */
-        padding: 5px; /* Add some padding around the menu */
+        top: 15px; /* Reduce top alignment by 25% */
+        right: 15px; /* Reduce right alignment by 25% */
+        padding: 7.5px; /* Reduce padding by 25% */
     }
 
     /* Smaller font size and padding for smaller screens */
     .top-right-nav a {
-        font-size: 14px; /* Smaller font size */
-        padding: 5px 10px; /* Reduced padding */
+        font-size: 14px; /* Reduce font size by 25% */
+        padding: 7.5px 11.25px; /* Reduce padding by 25% */
     }
 }
 
 /* For mobile devices in portrait mode */
 @media (max-width: 480px) {
+    .navbar {
+        padding: 5px 15px; /* Further reduce padding */
+        font-size: 9px; /* Further reduce font size */
+    }
+
     .menu a {
-        font-size: 16px; /* Adjust font size for smaller screens */
+        padding: 10px 15px; /* Reduce padding */
+        font-size: 12px; /* Further reduce font size */
     }
 
     .top-right-nav a {
-        font-size: 12px; /* Smaller font size for very small screens */
-        padding: 5px 8px; /* Further reduced padding */
+        font-size: 10px; /* Further reduce font size */
+        padding: 5px 10px; /* Further reduce padding */
     }
 
     .top-right-nav {
-        top: 5px; /* Further adjust top alignment for very small screens */
-        right: 5px; /* Further adjust right alignment for very small screens */
+        top: 10px; /* Further adjust top alignment */
+        right: 10px; /* Further adjust right alignment */
+        padding: 5px; /* Further reduce padding */
     }
 }
 
