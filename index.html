@@ -200,6 +200,50 @@
         .hidden {
             display: none;
         }
+	/* Existing styles */
+
+	.nav-container {
+    	    display: flex;
+    	    background-color: #333;
+    	    position: fixed; /* Fixes the menu to the top */
+    	    top: 0; /* Positions the menu at the top */
+    	    width: 100%; /* Ensures the menu spans the full width of the viewport */
+    	    z-index: 1000; /* Ensures the menu is above other content */
+	}
+
+	.nav-tab {
+    	    flex: 1;
+    	    text-align: center;
+    	    padding: 14px;
+    	    color: white;
+    	    text-decoration: none;
+    	    background-color: #333;
+	}
+
+	.nav-tab:hover {
+    	    background-color: #575757;
+	}
+
+	.nav-tab.active {
+    	    background-color: #575757;
+	}
+
+	.content {
+    	    padding: 20px;
+    	    margin-top: 50px; /* Adjust if the nav is fixed to avoid overlap */
+	}
+
+	/* Responsive design for smaller screens */
+	@media (max-width: 600px) {
+    	    .nav-container {
+        	flex-direction: column; /* Stack the tabs vertically */
+    	    }
+    	    .content {
+        	margin-top: 100px; /* Increase margin-top to prevent overlap */
+        	padding: 10px; /* Reduce padding on small screens */
+    	    }
+	}
+
     </style>
 </head>
 <body>
