@@ -48,21 +48,24 @@ body, ul {
 
 /* Top Right Navigation */
 .top-right-nav {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    display: flex; /* Ensure menu is a flex container */
+    position: fixed; /* Fixed positioning for consistent placement */
+    top: 20px; /* Aligns the menu 20px from the top */
+    right: 20px; /* Aligns the menu 20px from the right */
     background-color: #005f86;
     border-radius: 5px;
-    display: flex; /* Default: display menu items inline */
+    flex-direction: row; /* Align items horizontally by default */
+    width: auto; /* Adjust width as needed */
+    z-index: 1000; /* Ensure it is above other content */
 }
 
 /* Menu item styles */
 .top-right-nav a {
-    display: block;
     color: white;
     padding: 10px 15px;
     text-decoration: none;
     font-weight: bold;
+    transition: background-color 0.3s;
 }
 
 /* Hover effect */
@@ -110,44 +113,10 @@ body, ul {
         cursor: pointer;
     }
 
-    /* Mobile-specific styles for top-right-nav */
+    /* Adjust the top-right-nav menu for small screens */
     .top-right-nav {
-        flex-direction: column; /* Stack items vertically */
-        display: none; /* Hide menu by default on mobile */
-        position: absolute;
-        top: 20px; /* Align top edge */
-        right: 20px; /* Align right edge */
-        width: 200px; /* Set a fixed width or use 100% for full width */
-        background-color: #005f86; /* Consistent background color */
-        z-index: 1000; /* Ensure menu appears above other content */
-    }
-
-    /* Show menu button */
-    .top-right-nav::after {
-        content: 'Menu'; /* Text for the menu button */
-        display: block;
-        color: white;
-        background-color: #005f86;
-        padding: 10px;
-        text-align: center;
-        cursor: pointer;
-        border-radius: 5px;
-        font-weight: bold;
-    }
-
-    /* Show menu items when active */
-    .top-right-nav.active {
-        display: flex; /* Show the menu */
-    }
-
-    /* Hide individual links by default */
-    .top-right-nav a {
-        display: none; /* Hide links by default */
-    }
-
-    /* Show links when the menu is active */
-    .top-right-nav.active a {
-        display: block; /* Show links */
+        flex-direction: column; /* Stack items vertically on small screens */
+        display: flex; /* Ensure the menu is visible */
     }
 }
 
