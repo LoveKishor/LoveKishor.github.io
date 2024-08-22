@@ -117,6 +117,9 @@ body, ul {
     .top-right-nav {
         flex-direction: column; /* Stack items vertically on small screens */
         display: flex; /* Ensure the menu is visible */
+        width: auto; /* Ensure the width adjusts with content */
+        top: 20px; /* Maintain top alignment */
+        right: 20px; /* Maintain right alignment */
     }
 }
 
