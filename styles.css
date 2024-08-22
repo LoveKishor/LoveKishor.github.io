@@ -115,8 +115,8 @@ body, ul {
         flex-direction: column; /* Stack items vertically */
         display: none; /* Hide menu by default on mobile */
         position: absolute;
-        top: 20px; /* Same vertical position */
-        right: 20px; /* Same horizontal position */
+        top: 20px; /* Align top edge */
+        right: 20px; /* Align right edge */
         width: 200px; /* Set a fixed width or use 100% for full width */
         background-color: #005f86; /* Consistent background color */
         z-index: 1000; /* Ensure menu appears above other content */
