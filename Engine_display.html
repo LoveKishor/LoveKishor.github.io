@@ -2,109 +2,256 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product Gallery</title>
   <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --text-color: #333;
+      --light-gray: #f5f5f5;
+      --border-radius: 8px;
+    }
+    
     body {
-      font-family: sans-serif;
-      margin: 20px;
-      background: #f9f9f9;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: var(--light-gray);
+      color: var(--text-color);
+      line-height: 1.6;
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 30px;
+      margin: 30px 0;
+      color: var(--primary-color);
+      font-size: 2.2rem;
+    }
+
+    .loading {
+      text-align: center;
+      font-size: 1.2rem;
+      margin: 50px 0;
+      color: var(--secondary-color);
+    }
+
+    .error-message {
+      color: #e74c3c;
+      text-align: center;
+      padding: 20px;
+      background-color: #fdecea;
+      border-radius: var(--border-radius);
+      margin: 20px auto;
+      max-width: 600px;
     }
 
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+      padding: 0 20px;
     }
 
     .product-card {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 10px;
+      background: white;
+      border-radius: var(--border-radius);
       overflow: hidden;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
     }
 
     .product-card:hover {
-      transform: scale(1.02);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
     }
 
-    .product-card img {
-      width: 100%;
+    .product-image-container {
       height: 200px;
-      object-fit: cover;
-      border-bottom: 1px solid #eee;
+      background-color: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background-color: white;
     }
 
     .product-info {
-      padding: 15px;
+      padding: 20px;
+    }
+
+    .product-info h3 {
+      margin: 0 0 10px;
+      color: var(--primary-color);
+      font-size: 1.2rem;
     }
 
     .product-info p {
-      margin: 6px 0;
-      font-size: 14px;
+      margin: 8px 0;
+      font-size: 0.95rem;
     }
 
     .product-info p strong {
-      color: #444;
+      color: var(--primary-color);
+      font-weight: 600;
     }
 
-    @media (max-width: 600px) {
-      .product-card img {
-        height: 150px;
+    .empty-field {
+      color: #999;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 15px;
+        padding: 0 10px;
+      }
+      
+      .product-image-container {
+        height: 180px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .product-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-
   <h1>Our Products</h1>
+  <div id="loading" class="loading">Loading products...</div>
+  <div id="errorContainer" style="display: none;"></div>
   <div class="product-grid" id="productGrid"></div>
 
   <!-- PapaParse for CSV reading -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
   <script>
+    // Utility function to convert Google Drive URLs
+    function convertDriveUrl(url) {
+      if (!url || typeof url !== 'string') return '';
+      
+      // If already a direct image link, return as-is
+      if (url.includes('drive.google.com/uc?')) return url;
+      
+      // Extract file ID from various Google Drive URL formats
+      const patterns = [
+        /\/file\/d\/([^\/]+)/,         // Standard share link
+        /id=([^&]+)/,                   // URL with id parameter
+        /\/d\/([^\/]+)/,                // Alternative format
+        /\/([^\/]{33})\//               // 33-character file ID
+      ];
+      
+      for (const pattern of patterns) {
+        const match = url.match(pattern);
+        if (match && match[1]) {
+          return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+        }
+      }
+      
+      return url; // Return original if no match found
+    }
+
+    // Function to display product cards
     function displayProducts(data) {
       const container = document.getElementById('productGrid');
-      data.forEach(row => {
-        // Skip row if no product name or image
-        if (!row["product Name"] || !row["Product Image"]) return;
-
+      const errorContainer = document.getElementById('errorContainer');
+      const loadingElement = document.getElementById('loading');
+      
+      // Hide loading indicator
+      loadingElement.style.display = 'none';
+      
+      // Clear previous results
+      container.innerHTML = '';
+      
+      // Filter out empty rows
+      const validProducts = data.filter(row => row["product Name"] && row["item no."]);
+      
+      if (validProducts.length === 0) {
+        errorContainer.innerHTML = `
+          <div class="error-message">
+            No valid products found in the CSV file. Please check your data.
+          </div>
+        `;
+        errorContainer.style.display = 'block';
+        return;
+      }
+      
+      // Create product cards
+      validProducts.forEach(row => {
         const card = document.createElement('div');
         card.className = 'product-card';
         
+        const imgUrl = convertDriveUrl(row["Product Image"]);
+        const defaultImage = 'https://via.placeholder.com/300x200?text=No+Image+Available';
+        
         card.innerHTML = `
-          <img src="${row["Product Image"]}" alt="${row["product Name"]}">
+          <div class="product-image-container">
+            <img class="product-image" 
+                 src="${imgUrl || defaultImage}" 
+                 alt="${row["product Name"] || 'Product image'}"
+                 onerror="this.src='${defaultImage}'; this.onerror=null;">
+          </div>
           <div class="product-info">
-            <p><strong>Item No:</strong> ${row["item no."]}</p>
-            <p><strong>Name:</strong> ${row["product Name"]}</p>
-            <p><strong>Description:</strong> ${row["Discription"]}</p>
-            <p><strong>BIN:</strong> ${row["BIn"]}</p>
-            <p><strong>Vehicle Model:</strong> ${row["Vehicle Model"]}</p>
-            <p><strong>Company:</strong> ${row["Company"]}</p>
-            <p><strong>Type:</strong> ${row["Genuine/local supply"]}</p>
-            <p><strong>System:</strong> ${row["system"]}</p>
-            <p><strong>Segment:</strong> ${row["vehicle segment"]}</p>
+            <h3>${row["product Name"] || '<span class="empty-field">No name</span>'}</h3>
+            <p><strong>Item No:</strong> ${row["item no."] || '<span class="empty-field">N/A</span>'}</p>
+            ${row["Discription"] ? `<p><strong>Description:</strong> ${row["Discription"]}</p>` : ''}
+            ${row["BIn"] ? `<p><strong>BIN:</strong> ${row["BIn"]}</p>` : ''}
+            ${row["Vehicle Model"] ? `<p><strong>Vehicle Model:</strong> ${row["Vehicle Model"]}</p>` : ''}
+            ${row["Company"] ? `<p><strong>Company:</strong> ${row["Company"]}</p>` : ''}
+            ${row["Genuine/local supply"] ? `<p><strong>Type:</strong> ${row["Genuine/local supply"]}</p>` : ''}
+            ${row["system"] ? `<p><strong>System:</strong> ${row["system"]}</p>` : ''}
+            ${row["vehicle segment"] ? `<p><strong>Segment:</strong> ${row["vehicle segment"]}</p>` : ''}
           </div>
         `;
-
+        
         container.appendChild(card);
       });
     }
 
-    // Load CSV
-    Papa.parse("Engine_data.csv", {
-      header: true,
-      download: true,
-      skipEmptyLines: true,
-      complete: function(results) {
-        displayProducts(results.data);
-      }
+    // Error handling function
+    function handleError(error) {
+      const errorContainer = document.getElementById('errorContainer');
+      const loadingElement = document.getElementById('loading');
+      
+      loadingElement.style.display = 'none';
+      
+      errorContainer.innerHTML = `
+        <div class="error-message">
+          <strong>Error loading products:</strong><br>
+          ${error.message || 'Unknown error occurred'}
+        </div>
+      `;
+      errorContainer.style.display = 'block';
+      
+      console.error('Error:', error);
+    }
+
+    // Load and parse CSV
+    document.addEventListener('DOMContentLoaded', function() {
+      Papa.parse("Engine_data.csv", {
+        header: true,
+        download: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+          if (results.errors.length > 0) {
+            handleError(new Error('CSV parsing errors occurred'));
+            console.warn('Parsing warnings:', results.errors);
+          }
+          displayProducts(results.data);
+        },
+        error: function(error) {
+          handleError(error);
+        }
+      });
     });
   </script>
 </body>
