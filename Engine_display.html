@@ -80,6 +80,11 @@
       height: 100%;
       object-fit: contain;
       background-color: white;
+      transition: opacity 0.3s;
+    }
+
+    .product-image.loading {
+      opacity: 0.3;
     }
 
     .product-info {
@@ -135,12 +140,14 @@
   <!-- PapaParse for CSV reading -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
   <script>
-    // Utility function to convert Google Drive URLs
+    // 1. Google Drive URL Converter - Works with any shareable link
     function convertDriveUrl(url) {
-      if (!url || typeof url !== 'string') return '';
+      if (!url) return '';
       
-      // If already a direct image link, return as-is
-      if (url.includes('drive.google.com/uc?')) return url;
+      // If already a direct image link
+      if (url.includes('drive.google.com/uc?') || url.includes('lh3.googleusercontent.com')) {
+        return url;
+      }
       
       // Extract file ID from various Google Drive URL formats
       const patterns = [
@@ -153,40 +160,58 @@
       for (const pattern of patterns) {
         const match = url.match(pattern);
         if (match && match[1]) {
-          return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+          // Use Google's thumbnail proxy with size parameter
+          return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w1000`;
         }
       }
       
       return url; // Return original if no match found
     }
 
-    // Function to display product cards
-    function displayProducts(data) {
+    // 2. Image Loader with Error Handling
+    function loadImage(imgElement, url) {
+      return new Promise((resolve) => {
+        imgElement.classList.add('loading');
+        
+        const img = new Image();
+        img.onload = () => {
+          imgElement.src = url;
+          imgElement.classList.remove('loading');
+          resolve(true);
+        };
+        img.onerror = () => {
+          imgElement.src = 'https://via.placeholder.com/300x200?text=Image+Not+Available';
+          imgElement.classList.remove('loading');
+          imgElement.style.opacity = '0.7';
+          resolve(false);
+        };
+        img.src = url;
+      });
+    }
+
+    // 3. Display Products with Image Preloading
+    async function displayProducts(data) {
       const container = document.getElementById('productGrid');
       const errorContainer = document.getElementById('errorContainer');
       const loadingElement = document.getElementById('loading');
       
-      // Hide loading indicator
       loadingElement.style.display = 'none';
-      
-      // Clear previous results
       container.innerHTML = '';
       
-      // Filter out empty rows
       const validProducts = data.filter(row => row["product Name"] && row["item no."]);
       
       if (validProducts.length === 0) {
         errorContainer.innerHTML = `
           <div class="error-message">
-            No valid products found in the CSV file. Please check your data.
+            No valid products found in the CSV file.
           </div>
         `;
         errorContainer.style.display = 'block';
         return;
       }
       
-      // Create product cards
-      validProducts.forEach(row => {
+      // Create and load products one by one for better UX
+      for (const row of validProducts) {
         const card = document.createElement('div');
         card.className = 'product-card';
         
@@ -195,10 +220,10 @@
         
         card.innerHTML = `
           <div class="product-image-container">
-            <img class="product-image" 
-                 src="${imgUrl || defaultImage}" 
+            <img class="product-image loading" 
+                 src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23eee'/%3E%3C/svg%3E" 
                  alt="${row["product Name"] || 'Product image'}"
-                 onerror="this.src='${defaultImage}'; this.onerror=null;">
+                 data-src="${imgUrl || defaultImage}">
           </div>
           <div class="product-info">
             <h3>${row["product Name"] || '<span class="empty-field">No name</span>'}</h3>
@@ -214,10 +239,14 @@
         `;
         
         container.appendChild(card);
-      });
+        
+        // Load image after card is created
+        const img = card.querySelector('.product-image');
+        await loadImage(img, img.dataset.src);
+      }
     }
 
-    // Error handling function
+    // 4. Error Handling
     function handleError(error) {
       const errorContainer = document.getElementById('errorContainer');
       const loadingElement = document.getElementById('loading');
@@ -231,26 +260,26 @@
         </div>
       `;
       errorContainer.style.display = 'block';
-      
       console.error('Error:', error);
     }
 
-    // Load and parse CSV
+    // 5. Load and Parse CSV
     document.addEventListener('DOMContentLoaded', function() {
       Papa.parse("Engine_data.csv", {
         header: true,
         download: true,
-        skipEmptyLines: true,
+        skipEmptyLines: 'greedy',
+        dynamicTyping: true,
+        transform: (value) => {
+          return typeof value === 'string' ? value.trim() : value;
+        },
         complete: function(results) {
           if (results.errors.length > 0) {
-            handleError(new Error('CSV parsing errors occurred'));
             console.warn('Parsing warnings:', results.errors);
           }
           displayProducts(results.data);
         },
-        error: function(error) {
-          handleError(error);
-        }
+        error: handleError
       });
     });
   </script>
