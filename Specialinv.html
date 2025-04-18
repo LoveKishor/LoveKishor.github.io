@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Google Sheet Data Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .image-link {
+      color: #1a73e8;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .image-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      th {
+        display: none;
+      }
+
+      td {
+        position: relative;
+        padding-left: 50%;
+        border: none;
+        border-bottom: 1px solid #ddd;
+      }
+
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        font-weight: bold;
+        white-space: nowrap;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Specialized Addition Related Spare Parts</h1>
+  <table id="data-table">
+    <thead></thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const sheetID = '1PsmdSvaY3c7zSp4caYFp6ggKUJT8LVBBbE9UWIykxJk';  // <- Replace with your actual Spreadsheet ID
+    const sheetName = 'Specialized additions';      // <-- Replace with your tab/sheet name
+    const url = `https://opensheet.elk.sh/${sheetID}/${sheetName}`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        // Filter rows where Column A has a value
+        const filteredData = data.filter(row => row['Part No'] || row['part no'] || row['Item No'] || row['item no'] || row[Object.keys(row)[0]]);
+        
+        if (filteredData.length === 0) {
+          throw new Error('No valid rows found in Column A');
+        }
+
+        const table = document.getElementById('data-table');
+        const headers = Object.keys(filteredData[0]);
+
+        // Create table header
+        const thead = table.querySelector('thead');
+        thead.innerHTML = '<tr>' + headers.map(h => `<th>${h}</th>`).join('') + '</tr>';
+
+        // Create table body
+        const tbody = table.querySelector('tbody');
+        filteredData.forEach(row => {
+          const tr = document.createElement('tr');
+          headers.forEach(h => {
+            const td = document.createElement('td');
+            td.setAttribute('data-label', h);
+            
+            // Check for image links (case insensitive)
+            if (h.toLowerCase().includes('image') && row[h] && 
+                (row[h].includes('drive.google.com') || 
+                 row[h].includes('http') || 
+                 row[h].includes('https'))) {
+              
+              const link = document.createElement('a');
+              link.className = 'image-link';
+              link.href = row[h];
+              link.target = '_blank';
+              link.textContent = row[h].includes('drive.google.com') ? 'View Image' : 'View Link';
+              td.appendChild(link);
+              
+            } else if (row[h]) {
+              td.textContent = row[h];
+            } else {
+              td.textContent = '-';
+            }
+            
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('data-table').innerHTML = `
+          <tr>
+            <td colspan="10" style="text-align:center; color:red; padding:20px;">
+              ${error.message || 'Error loading data. Please check spreadsheet sharing settings.'}
+            </td>
+          </tr>
+        `;
+      });
+  </script>
+
+</body>
+</html>
