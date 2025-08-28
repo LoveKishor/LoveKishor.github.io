@@ -59,7 +59,7 @@
     .top-nav {
       position: fixed;        /* stays at the top */
       top: 0;
-      left: 0;
+      left: 50%;
       background-color: rgba;
       overflow: hidden;
       padding: 10px 20px;
@@ -79,12 +79,25 @@
       background-color: #555;
       border-radius: 4px;
     }
+     .forward-button{
+      position: fixed;
+      top: 0;
+      right: 0;
+     }
+     .back-button{
+      position: fixed;
+      top: 0;
+      left: 0;
+     }
+
         
     </style>
 </head>
 <body>
+    <button class = "back-button" onclick="history.back()">⬅️</button>
+    <button class = "forward-button" onclick="history.forward()">➡️</button>
     <nav class ="top-nav">
-        <a href = "https://www.lovekishorbista.com.np" top:0; right:0;>⬅️main page</a>
+        <a href = "https://www.lovekishorbista.com.np">go to main page</a>
     </nav>
     <div class="container">
         <p class="info-text">Welcome to my Blogs.</p>
