@@ -45,7 +45,7 @@
 	.top-nav {
       position: fixed;        /* stays at the top */
       top: 0;
-      left: 0;
+      left: 45%;
       background-color: rgba;
       overflow: hidden;
       padding: 10px 20px;
@@ -65,12 +65,24 @@
       background-color: #555;
       border-radius: 4px;
     }
+    .forward-button{
+      position: fixed;
+      top: 0;
+      right: 0;
+     }
+     .back-button{
+      position: fixed;
+      top: 0;
+      left: 0;
+     }
 
     </style>
 </head>
 <body>
+    <button class = "back-button" onclick="history.back()">⬅️</button>
+    <button class = "forward-button" onclick="history.forward()">➡️</button>
     <nav class = "top-nav">
-       <a href = "https://www.lovekishorbista.com.np/" >⬅️main page</a>
+       <a href = "https://www.lovekishorbista.com.np/" >go to main page</a>
     </nav>
     <div class="container">
         <a href="https://www.projects.lovekishorbista.com.np/" class="tab">PROJECTS</a>
