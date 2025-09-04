@@ -59,17 +59,18 @@
       overflow: hidden;
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       transition: all 0.3s ease;
-      transform: scale(0.25);
+      transform: scale(0.5);
     }
 
     .product-card:hover {
       transform: translateY(-5px) scale(1.5);
       box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-      z-index:999;
+      z-index:10;
+      transform-origin: center center;
     }
 
     .product-image-container {
-      height: 50px;
+      height: 100px;
       background-color: #eee;
       display: flex;
       align-items: center;
@@ -120,9 +121,15 @@
         gap: 15px;
         padding: 0 10px;
       }
-      
+      .product-card:hover {
+      transform: translateY(-5px) scale(1);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+      z-index:10;
+      transform-origin: center center;
+    }
+
       .product-image-container {
-        height: 50px;
+        height: 100px;
       }
     }
 
